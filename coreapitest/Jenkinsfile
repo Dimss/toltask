@@ -151,7 +151,7 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                            def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
+                            def icBcTemplate = readFile('coreapitest/ocp/ci/app-is-bc.yaml')
                             def models = openshift.process(icBcTemplate,
                                     "-p=BC_IS_NAME=${getAppName()}",
                                     "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
