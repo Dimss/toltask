@@ -149,19 +149,19 @@ pipeline {
             }
         }
 
-//        stage("Run tests") {
-//            steps {
-//                script {
-//                    sh """
-//                        export ControllerSettings__DbConfig__DbConnectionString=mongodb://${getMongoUserAndPass()}:${
-//                        getMongoUserAndPass()
-//                    }@${getMongoServiceName()}:27017/${getMongoDbName()}
-//                        export ControllerSettings__DbConfig__DbName=${getMongoDbName()}
-//                        cd app.tests && dotnet test
-//                    """
-//                }
-//            }
-//        }
+        stage("Run tests") {
+            steps {
+                script {
+                    sh """
+                        export ControllerSettings__DbConfig__DbConnectionString=mongodb://${getMongoUserAndPass()}:${
+                        getMongoUserAndPass()
+                    }@${getMongoServiceName()}:27017/${getMongoDbName()}
+                        export ControllerSettings__DbConfig__DbName=${getMongoDbName()}
+                        cd coreapitest/app.tests && dotnet test
+                    """
+                }
+            }
+        }
 
         stage("Cleanup test resources") {
             steps {
