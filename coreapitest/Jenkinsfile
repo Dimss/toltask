@@ -158,7 +158,7 @@ pipeline {
                                     "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/coreapitest",
                                     "-p=DOCKER_IMAGE_TAG=${getDockerImageTag()}",
                                     "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
-                                    "-p=GIT_REF=${env.gitlabSourceBranch}",
+                                    "-p=GIT_REF=master",
                                     "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
                             )
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
