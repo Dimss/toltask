@@ -1,1 +1,1 @@
-DOTNET_STARTUP_PROJECT=coreapitest/app/app.csproj
+DOTNET_STARTUP_PROJECT=app/app.csproj
