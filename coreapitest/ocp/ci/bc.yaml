@@ -17,7 +17,7 @@ spec:
       - name: "S2I_BUILD_IMAGE"
         value: "dotnet:2.1"
       - name: "DOCKER_IMAGE_PREFIX"
-        value: "dimssss"
+        value: "toluna"
       - name: "DOCKER_REGISTRY"
-        value: "docker.io"
+        value: "docker-registry.default.svc:5000"
     type: JenkinsPipeline
