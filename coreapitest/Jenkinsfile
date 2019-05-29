@@ -106,7 +106,7 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                            echo "Hello world"
+                            echo "ls -all"
                         }
                     }
                 }
