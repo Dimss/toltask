@@ -106,6 +106,9 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
+                            sh """
+                                ls -all
+                               """
                             echo "ls -all"
                         }
                     }
