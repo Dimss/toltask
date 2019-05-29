@@ -163,17 +163,17 @@ pipeline {
 //            }
 //        }
 
-//        stage("Cleanup test resources") {
-//            steps {
-//                script {
-//                    openshift.withCluster() {
-//                        openshift.withProject() {
-//                            openshift.delete(getCiInfraDeps())
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        stage("Cleanup test resources") {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject() {
+                            openshift.delete(getCiInfraDeps())
+                        }
+                    }
+                }
+            }
+        }
 
 //        stage("Create S2I image stream and build configs") {
 //            steps {
