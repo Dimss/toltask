@@ -132,22 +132,22 @@ pipeline {
 //            }
 //        }
 
-//        stage("Deploy tests infra dependencies") {
-//            steps {
-//                script {
-//                    openshift.withCluster() {
-//                        openshift.withProject() {
-//                            openshift.create(getCiInfraDeps())
-//                            def dc = openshift.selector("dc/${getMongoServiceName()}")
-//                            dc.untilEach(1) {
-//                                echo "${it.object()}"
-//                                return it.object().status.readyReplicas == 1
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        stage("Deploy tests infra dependencies") {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject() {
+                            openshift.create(getCiInfraDeps())
+                            def dc = openshift.selector("dc/${getMongoServiceName()}")
+                            dc.untilEach(1) {
+                                echo "${it.object()}"
+                                return it.object().status.readyReplicas == 1
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 //        stage("Run tests") {
 //            steps {
