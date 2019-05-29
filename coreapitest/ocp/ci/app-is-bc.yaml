@@ -34,6 +34,7 @@ objects:
       git:
         uri: "${GIT_REPO}"
         ref: "${GIT_REF}"
+      contextDir: "coreapitest"
     strategy:
       sourceStrategy:
         from:
