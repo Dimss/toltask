@@ -1,1 +1,2 @@
+CONTEXT_DIR=coreapitest
 DOTNET_STARTUP_PROJECT=coreapitest/app/app.csproj
