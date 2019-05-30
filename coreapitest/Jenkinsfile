@@ -204,7 +204,7 @@ pipeline {
                             def monogDbName = getMonogDevDbName()
                             def template = readFile('coreapitest/ocp/cd/template.yaml')
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
-                            echo "================== starting process ==================="
+                            echo "================== starting process   ==================="
                             def models = openshift.process(template,
                                     "-p=IMAGE=${image}",
                                     "-p=NAME=${name}",
