@@ -148,6 +148,7 @@ pipeline {
 
         stage("Create S2I image stream and build configs") {
             steps {
+
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
