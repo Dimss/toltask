@@ -1,0 +1,93 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: CoreApiTest
+message: CoreApiTest Template
+metadata:
+  annotations:
+    description: CoreApiTest Template
+    iconClass: fa fa-mixcloud
+    openshift.io/display-name: CoreApiTest
+    tags: coreapitest
+  creationTimestamp: 2019-02-27T13:23:41Z
+  name: coreapitest
+objects:
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: ${NAME}
+  type: Opaque
+  stringData:
+    db_conn_str: "mongodb://${MONGO_USER}:${MONGO_PASS}@monogo:27017/${MONGO_DB}"
+    db_name: ${MONGO_DB}
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+  spec:
+    selector:
+      app: ${NAME}
+    ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: ${NAME}
+  spec:
+    to:
+      kind: Service
+      name: ${NAME}
+- kind: Deployment
+  apiVersion: apps/v1
+  metadata:
+    labels:
+      app: ${NAME}
+    name: ${NAME}
+  spec:
+    replicas: "1"
+    selector:
+      matchLabels:
+        app: ${NAME}
+    template:
+      metadata:
+        labels:
+          app: ${NAME}
+      spec:
+        containers:
+        - name: ${NAME}
+          image: ${IMAGE}
+          env:
+          - name: ControllerSettings__DbConfig__DbConnectionString
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}
+                key: db_conn_str
+          - name: ControllerSettings__DbConfig__DbName
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}
+                key: db_name
+          ports:
+            - containerPort: 8080
+parameters:
+- displayName: CoreApiTest docker image
+  name: IMAGE
+  required: true
+- displayName: Deployment name
+  name: NAME
+  required: true
+- displayName: Deployment name
+  name: NAME
+  required: true
+- displayName: Mongodb User
+  name: MONGO_USER
+  required: true
+- displayName: Mongodb pass
+  name: MONGO_PASS
+  required: true
+- displayName: Mongodb name
+  name: MONGO_DB
+  required: true
