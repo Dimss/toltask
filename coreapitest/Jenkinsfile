@@ -106,9 +106,9 @@ pipeline {
                             def dc = openshift.selector("dc/${getMongoServiceName()}")
                             dc.untilEach(1) {
 
-                                echop "====================================="
+                                echo "====================================="
                                 echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().it.object().status))}"
-                                echop "====================================="
+                                echo "====================================="
 //                                return it.object().status.availableReplicas == 1
                             }
                         }
