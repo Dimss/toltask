@@ -107,7 +107,7 @@ pipeline {
                             dc.untilEach(1) {
 
                                 echo "====================================="
-                                echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().it.object().status))}"
+                                echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
                                 echo "====================================="
 //                                return it.object().status.availableReplicas == 1
                             }
