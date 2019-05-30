@@ -171,6 +171,7 @@ pipeline {
                             def mongoPass = getMongoUserAndPass()
                             def monogDbName = getMonogDevDbName()
                             def template = readFile('coreapitest/ocp/cd/template.yaml')
+                            echo "============= image ${image}  =============== "
                             def models = openshift.process(template,
                                     "-p=IMAGE=${image}",
                                     "-p=NAME=${name}",
