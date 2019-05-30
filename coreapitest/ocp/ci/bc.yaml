@@ -15,7 +15,7 @@ spec:
       - name: "APP_NAME"
         value: "coreapitest"
       - name: "S2I_BUILD_IMAGE"
-        value: "dotnet:2.1"
+        value: "dotnet:2.2"
       - name: "DOCKER_IMAGE_PREFIX"
         value: "toluna"
       - name: "DOCKER_REGISTRY"
