@@ -105,7 +105,7 @@ pipeline {
                             openshift.create(getCiInfraDeps())
                             def dc = openshift.selector("dc/${getMongoServiceName()}")
                             dc.untilEach(1) {
-                                echo "${it.object()}"
+                                echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object()))}"
                                 return it.object().status.readyReplicas == 1
                             }
                         }
@@ -188,7 +188,7 @@ pipeline {
                             def monogUser = getMongoUserAndPass()
                             def mongoPass = getMongoUserAndPass()
                             def monogDbName = getMongoDbName()
-                            def template = readFile('ocp/cd/template.yaml')
+                            def template = readFile('coreapitest/ocp/cd/template.yaml')
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
                             def models = openshift.process(template,
                                     "-p=IMAGE=${image}",
