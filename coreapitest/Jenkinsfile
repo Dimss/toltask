@@ -109,6 +109,7 @@ pipeline {
                                 echo "***************************************"
                                 echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
                                 echo "***************************************"
+                                return false
 //                                return it.object().status.availableReplicas == 1
                             }
                         }
