@@ -106,13 +106,10 @@ pipeline {
                             echo "================== dc/${getMongoServiceName()} ================="
                             def dc = openshift.selector("dc/${getMongoServiceName()}")
                             dc.untilEach(1) {
-
                                 echo "***************************************"
                                 echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
                                 echo "***************************************"
-
                                 if (it.object().status.availableReplicas == 1) {
-                                    echo "***************** they are equal *****************"
                                     echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
                                     return true
                                 }
