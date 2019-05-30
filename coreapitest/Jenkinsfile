@@ -164,7 +164,13 @@ pipeline {
                         openshift.withProject() {
                             // Deploy lab mongo
                             def mongoLab = openshift.selector("dc/${getMonogDevDbName()}")
-                            echo "=============== ${mongoLab}"
+                            if (mongoLab.count() == 0) {
+                                echo "Gonna create new lab MongoDB instance"
+                                openshift.create(getDevMongo())
+                            } else {
+                                echo "MongoDB instance already exists"
+                            }
+
 //                            openshift.create(getDevMongo())
 //                            // Deploy application
 //                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
