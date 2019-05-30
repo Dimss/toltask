@@ -173,14 +173,14 @@ pipeline {
                             def template = readFile('coreapitest/ocp/cd/template.yaml')
 //                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
 //                            echo "================== starting process   ==================="
-//                            def models = openshift.process(template,
-//                                    "-p=IMAGE=${image}",
-//                                    "-p=NAME=${name}",
-//                                    "-p=MONGO_USER=${monogUser}",
-//                                    "-p=MONGO_PASS=${mongoPass}",
-//                                    "-p=MONGO_DB=${monogDbName}",
-//                            )
-//                            openshift.create(models)
+                            def models = openshift.process(template,
+                                    "-p=IMAGE=${image}",
+                                    "-p=NAME=${name}",
+                                    "-p=MONGO_USER=${monogUser}",
+                                    "-p=MONGO_PASS=${mongoPass}",
+                                    "-p=MONGO_DB=${monogDbName}",
+                            )
+                            openshift.create(models)
                         }
                     }
                 }
