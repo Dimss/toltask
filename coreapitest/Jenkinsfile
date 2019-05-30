@@ -165,7 +165,7 @@ pipeline {
                             // Deploy mongo
                             openshift.create(getDevMongo())
                             // Deploy application
-//                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
+                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
 //                            def name = "coreapitest-${getGitCommitShortHash()}"
 //                            def monogUser = getMongoUserAndPass()
 //                            def mongoPass = getMongoUserAndPass()
