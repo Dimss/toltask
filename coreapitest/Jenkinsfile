@@ -103,8 +103,9 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             openshift.create(getCiInfraDeps())
-//                            def dc = openshift.selector("dc/${getMongoServiceName()}")
-                            def dc = openshift.selector('rc', "${getMongoServiceName()}")
+                            echo "================== dc/${getMongoServiceName()} ================="
+                            def dc = openshift.selector("dc/${getMongoServiceName()}")
+//                            def dc = openshift.selector('rc', "${getMongoServiceName()}")
                             dc.untilEach(1) {
 
                                 echo "***************************************"
