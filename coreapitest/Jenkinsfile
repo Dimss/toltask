@@ -105,10 +105,10 @@ pipeline {
                             openshift.create(getCiInfraDeps())
                             def dc = openshift.selector("dc/${getMongoServiceName()}")
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(dc.object()))}"
-//                            dc.untilEach(1) {
-//                                echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object()))}"
-//                                return it.object().status.availableReplicas == 1
-//                            }
+                            dc.untilEach(1) {
+                                echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object()))}"
+                                return it.object().status.availableReplicas == 1
+                            }
                         }
                     }
                 }
