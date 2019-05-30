@@ -87,6 +87,7 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             openshift.create(getCiInfraDeps())
+
                             def dc = openshift.selector("dc/${getMongoServiceName()}")
                             dc.untilEach(1) {
                                 if (it.object().status.availableReplicas == 1) {
