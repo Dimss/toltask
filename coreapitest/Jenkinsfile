@@ -163,7 +163,7 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             // Deploy lab mongo
-                            def mongoLab = openshift.selector("bc/${getMonogDevDbName()}")
+                            def mongoLab = openshift.selector("dc/${getMonogDevDbName()}")
                             echo "=============== ${mongoLab}"
 //                            openshift.create(getDevMongo())
 //                            // Deploy application
