@@ -170,24 +170,22 @@ pipeline {
                             } else {
                                 echo "MongoDB instance already exists"
                             }
-
-//                            openshift.create(getDevMongo())
-//                            // Deploy application
-//                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
-//                            def name = "coreapitest-${getGitCommitShortHash()}"
-//                            def monogUser = getMongoUserAndPass()
-//                            def mongoPass = getMongoUserAndPass()
-//                            def monogDbName = getMonogDevDbName()
-//                            def template = readFile('coreapitest/ocp/cd/template.yaml')
-//                            echo "============= image ${image}  =============== "
-//                            def models = openshift.process(template,
-//                                    "-p=IMAGE=${image}",
-//                                    "-p=NAME=${name}",
-//                                    "-p=MONGO_USER=${monogUser}",
-//                                    "-p=MONGO_PASS=${mongoPass}",
-//                                    "-p=MONGO_DB=${monogDbName}",
-//                            )
-//                            openshift.create(models)
+                            // Deploy application
+                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
+                            def name = "coreapitest-${getGitCommitShortHash()}"
+                            def monogUser = getMongoUserAndPass()
+                            def mongoPass = getMongoUserAndPass()
+                            def monogDbName = getMonogDevDbName()
+                            def template = readFile('coreapitest/ocp/cd/template.yaml')
+                            echo "============= image ${image}  =============== "
+                            def models = openshift.process(template,
+                                    "-p=IMAGE=${image}",
+                                    "-p=NAME=${name}",
+                                    "-p=MONGO_USER=${monogUser}",
+                                    "-p=MONGO_PASS=${mongoPass}",
+                                    "-p=MONGO_DB=${monogDbName}",
+                            )
+                            openshift.create(models)
                         }
                     }
                 }
