@@ -109,8 +109,9 @@ pipeline {
                                 echo "***************************************"
                                 echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
                                 echo "***************************************"
+
+                                if (it.object().status.availableReplicas == 1) return true
                                 return false
-//                                return it.object().status.availableReplicas == 1
                             }
                         }
                     }
