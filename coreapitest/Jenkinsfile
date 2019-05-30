@@ -165,12 +165,12 @@ pipeline {
                             // Deploy mongo
                             openshift.create(getDevMongo())
                             // Deploy application
-                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
-                            def name = "coreapitest-${getGitCommitShortHash()}"
-                            def monogUser = getMongoUserAndPass()
-                            def mongoPass = getMongoUserAndPass()
-                            def monogDbName = getMonogDevDbName()
-                            def template = readFile('coreapitest/ocp/cd/template.yaml')
+//                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
+//                            def name = "coreapitest-${getGitCommitShortHash()}"
+//                            def monogUser = getMongoUserAndPass()
+//                            def mongoPass = getMongoUserAndPass()
+//                            def monogDbName = getMonogDevDbName()
+//                            def template = readFile('coreapitest/ocp/cd/template.yaml')
 //                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
 //                            echo "================== starting process   ==================="
 //                            def models = openshift.process(template,
