@@ -76,18 +76,20 @@ parameters:
 - displayName: CoreApiTest docker image
   name: IMAGE
   required: true
+  value: "image"
 - displayName: Deployment name
   name: NAME
   required: true
-- displayName: Deployment name
-  name: NAME
-  required: true
+  value: "name"
 - displayName: Mongodb User
   name: MONGO_USER
   required: true
+  value: "mogno_user"
 - displayName: Mongodb pass
   name: MONGO_PASS
   required: true
+  value: "mongo_pass"
 - displayName: Mongodb name
   name: MONGO_DB
   required: true
+  value: "mongo_db"
