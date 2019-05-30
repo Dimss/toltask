@@ -81,81 +81,81 @@ pipeline {
     }
     stages {
 
-        stage("Deploy tests infra dependencies") {
-            steps {
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            openshift.create(getCiInfraDeps())
-                            def dc = openshift.selector("dc/${getMongoServiceName()}")
-                            dc.untilEach(1) {
-                                if (it.object().status.availableReplicas == 1) {
-                                    echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
-                                    return true
-                                }
-                                return false
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        stage("Run tests") {
-            steps {
-                script {
-                    sh """
-                        export ControllerSettings__DbConfig__DbConnectionString=mongodb://${getMongoUserAndPass()}:${
-                        getMongoUserAndPass()
-                    }@${getMongoServiceName()}:27017/${getMongoDbName()}
-                        export ControllerSettings__DbConfig__DbName=${getMongoDbName()}
-                        cd coreapitest/app.tests && dotnet test
-                    """
-                }
-            }
-        }
-
-        stage("Cleanup test resources") {
-            steps {
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            openshift.delete(getCiInfraDeps())
-                        }
-                    }
-                }
-            }
-        }
-
-        stage("Create S2I image stream and build configs") {
-            steps {
-
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            def icBcTemplate = readFile('coreapitest/ocp/ci/app-is-bc.yaml')
-                            def models = openshift.process(icBcTemplate,
-                                    "-p=BC_IS_NAME=${getAppName()}",
-                                    "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
-                                    "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/coreapitest",
-                                    "-p=DOCKER_IMAGE_TAG=${getDockerImageTag()}",
-                                    "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
-                                    "-p=GIT_REF=master",
-                                    "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
-                            )
-                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
-                            openshift.create(models)
-                            def bc = openshift.selector("buildconfig/${getAppName()}")
-                            def build = bc.startBuild()
-                            build.logs("-f")
-                            bc = openshift.selector("buildconfig/${getAppName()}")
-                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(bc))}"
-                            openshift.delete(models)
-                        }
-                    }
-                }
-            }
-        }
+//        stage("Deploy tests infra dependencies") {
+//            steps {
+//                script {
+//                    openshift.withCluster() {
+//                        openshift.withProject() {
+//                            openshift.create(getCiInfraDeps())
+//                            def dc = openshift.selector("dc/${getMongoServiceName()}")
+//                            dc.untilEach(1) {
+//                                if (it.object().status.availableReplicas == 1) {
+//                                    echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
+//                                    return true
+//                                }
+//                                return false
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        stage("Run tests") {
+//            steps {
+//                script {
+//                    sh """
+//                        export ControllerSettings__DbConfig__DbConnectionString=mongodb://${getMongoUserAndPass()}:${
+//                        getMongoUserAndPass()
+//                    }@${getMongoServiceName()}:27017/${getMongoDbName()}
+//                        export ControllerSettings__DbConfig__DbName=${getMongoDbName()}
+//                        cd coreapitest/app.tests && dotnet test
+//                    """
+//                }
+//            }
+//        }
+//
+//        stage("Cleanup test resources") {
+//            steps {
+//                script {
+//                    openshift.withCluster() {
+//                        openshift.withProject() {
+//                            openshift.delete(getCiInfraDeps())
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        stage("Create S2I image stream and build configs") {
+//            steps {
+//
+//                script {
+//                    openshift.withCluster() {
+//                        openshift.withProject() {
+//                            def icBcTemplate = readFile('coreapitest/ocp/ci/app-is-bc.yaml')
+//                            def models = openshift.process(icBcTemplate,
+//                                    "-p=BC_IS_NAME=${getAppName()}",
+//                                    "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
+//                                    "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/coreapitest",
+//                                    "-p=DOCKER_IMAGE_TAG=${getDockerImageTag()}",
+//                                    "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
+//                                    "-p=GIT_REF=master",
+//                                    "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
+//                            )
+//                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
+//                            openshift.create(models)
+//                            def bc = openshift.selector("buildconfig/${getAppName()}")
+//                            def build = bc.startBuild()
+//                            build.logs("-f")
+//                            bc = openshift.selector("buildconfig/${getAppName()}")
+//                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(bc))}"
+//                            openshift.delete(models)
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         stage("Deploy to OpenShift") {
             steps {
@@ -163,23 +163,25 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             // Deploy lab mongo
-                            openshift.create(getDevMongo())
-                            // Deploy application
-                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
-                            def name = "coreapitest-${getGitCommitShortHash()}"
-                            def monogUser = getMongoUserAndPass()
-                            def mongoPass = getMongoUserAndPass()
-                            def monogDbName = getMonogDevDbName()
-                            def template = readFile('coreapitest/ocp/cd/template.yaml')
-                            echo "============= image ${image}  =============== "
-                            def models = openshift.process(template,
-                                    "-p=IMAGE=${image}",
-                                    "-p=NAME=${name}",
-                                    "-p=MONGO_USER=${monogUser}",
-                                    "-p=MONGO_PASS=${mongoPass}",
-                                    "-p=MONGO_DB=${monogDbName}",
-                            )
-                            openshift.create(models)
+                            def mongoLab = openshift.selector("bc/${getMonogDevDbName()}")
+                            echo "=============== ${mongoLab}"
+//                            openshift.create(getDevMongo())
+//                            // Deploy application
+//                            def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/coreapitest:${getDockerImageTag()}"
+//                            def name = "coreapitest-${getGitCommitShortHash()}"
+//                            def monogUser = getMongoUserAndPass()
+//                            def mongoPass = getMongoUserAndPass()
+//                            def monogDbName = getMonogDevDbName()
+//                            def template = readFile('coreapitest/ocp/cd/template.yaml')
+//                            echo "============= image ${image}  =============== "
+//                            def models = openshift.process(template,
+//                                    "-p=IMAGE=${image}",
+//                                    "-p=NAME=${name}",
+//                                    "-p=MONGO_USER=${monogUser}",
+//                                    "-p=MONGO_PASS=${mongoPass}",
+//                                    "-p=MONGO_DB=${monogDbName}",
+//                            )
+//                            openshift.create(models)
                         }
                     }
                 }
