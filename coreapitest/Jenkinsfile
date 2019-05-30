@@ -110,7 +110,11 @@ pipeline {
                                 echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
                                 echo "***************************************"
 
-                                if (it.object().status.availableReplicas == 1) return true
+                                if (it.object().status.availableReplicas == 1) {
+                                    echo "***************** they are equal *****************"
+                                    echo "${JsonOutput.prettyPrint(JsonOutput.toJson(it.object().status))}"
+                                    return true
+                                }
                                 return false
                             }
                         }
