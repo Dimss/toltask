@@ -1,4 +1,4 @@
-### Cloud Native Jenkins setup
+# Cloud Native Jenkins setup
 
 ## Stack 
  - Minishift 
