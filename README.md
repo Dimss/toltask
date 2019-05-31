@@ -4,6 +4,8 @@
  - Minishift 
  - Jenkins 
  - Jenkins slave for dotnet core
+ - dotNet 2.1 core app
+ - MongoDB 
 ## Demo application
 - REST API on top of dotNet core 2.1 application
 - MongoDB for persistency 
