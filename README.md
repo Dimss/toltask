@@ -4,7 +4,9 @@
  - Minishift 
  - Jenkins 
  - Jenkins slave for dotnet core
- 
+## Demo application
+- REST API on top of dotNet core 2.1 application
+- MongoDB for persistency 
 ## Installation
 - Install Minishfit https://docs.okd.io/latest/minishift/getting-started/index.html
 - Setup and install Jenkins 
