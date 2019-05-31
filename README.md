@@ -29,6 +29,11 @@ oc get routes | grep jenkins |awk '{print "http://"$2}'
 oc create -f https://raw.githubusercontent.com/Dimss/toltask/master/coreapitest/ocp/ci/bc.yaml
 # Start build and refresh Jenkins UI to see the Pipeline progress execution
 oc start-build coreapitest 
+# Once the Pipeline is finished you can access to the application 
+# Exec application status URL , should response with host name 
+oc get routes | grep coreapitest |awk '{print "http://"$2"/api/system"}' | xargs curl
+# Exec application DB access, should response with empty array 
+oc get routes | grep coreapitest |awk '{print "http://"$2"/api/Person"}' | xargs curl
 ```
 
    
