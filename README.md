@@ -16,7 +16,7 @@ oc new-project toluna
 # Deploy MongoDB template 
 oc create -f https://raw.githubusercontent.com/Dimss/toltask/master/Jenkins/mongodb-ephemeral-template.json -n openshift 
 # Add dotnet2.1 to dotnet tag
-oc tag registry.centos.org/dotnet/dotnet-21-centos7:latest dotnet:2.1
+oc tag registry.centos.org/dotnet/dotnet-21-centos7:latest dotnet:2.1 -n openshift
 # Deploy Jenkins
 oc create -f https://raw.githubusercontent.com/Dimss/toltask/master/Jenkins/jenkins.yaml
 # Once Jenkins pod is up and running access to Jenkins UI
