@@ -19,7 +19,6 @@ oc login -usystem:admin
 ```
 Create new project
 ```bash
-
 oc new-project toluna
 ```
 Deploy MongoDB template
