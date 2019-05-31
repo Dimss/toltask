@@ -9,10 +9,12 @@
 - Install Minishfit https://docs.okd.io/latest/minishift/getting-started/index.html
 - Setup and install Jenkins 
 ```bash
+# Login as system admin
+oc login -usystem:admin
 # Create new project
 oc new-project toluna
-# Deploy mongo template 
-oc process -f https://raw.githubusercontent.com/Dimss/toltask/master/Jenkins/mongodb-ephemeral-template.json  | oc create -f -
+# Deploy MongoDB template 
+oc create -f https://raw.githubusercontent.com/Dimss/toltask/master/Jenkins/mongodb-ephemeral-template.json -n openshift 
 # Add dotnet2.1 to dotnet tag
 oc tag registry.centos.org/dotnet/dotnet-21-centos7:latest dotnet:2.1
 # Deploy Jenkins
