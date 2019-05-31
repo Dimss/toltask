@@ -27,6 +27,10 @@ oc create -f https://raw.githubusercontent.com/Dimss/toltask/master/Jenkins/jenk
 # and make sure you are able to login 
 # user and pass: admin/password
 oc get routes | grep jenkins |awk '{print "http://"$2}'
+# Set following values in in-process script approval (https://jenkins-toluna.192.168.64.10.nip.io/scriptApproval/)
+method hudson.plugins.git.GitSCM getUserRemoteConfigs
+method hudson.plugins.git.UserRemoteConfig getUrl
+staticMethod groovy.json.JsonOutput toJson java.lang.Object
 # Deploy Jenkins Pipeline Build config 
 oc create -f https://raw.githubusercontent.com/Dimss/toltask/master/coreapitest/ocp/ci/bc.yaml
 # Start build and refresh Jenkins UI to see the Pipeline progress execution
