@@ -151,7 +151,7 @@ pipeline {
                             build.logs("-f")
                             bc = openshift.selector("buildconfig/${getAppName()}")
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(bc))}"
-                            openshift.delete(models)
+//                            openshift.delete(models)
                         }
                     }
                 }
